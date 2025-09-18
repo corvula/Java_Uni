@@ -1,27 +1,32 @@
 package ua.model;
 
-import ua.util.ValidationHelper;
-import java.time.LocalDate;
+public abstract class Person {
+    protected String firstName;
+    protected String lastName;
 
-public class Patient extends Person {
-    private String patientId;
-    private LocalDate birthDate;
-
-    public Patient(String firstName, String lastName, String patientId, LocalDate birthDate) {
-        super(firstName, lastName);
-        ValidationHelper.requireNonEmpty(firstName, "First Name");
-        ValidationHelper.requireNonEmpty(lastName, "Last Name");
-        ValidationHelper.requireNonEmpty(patientId, "Patient ID");
-        ValidationHelper.requirePast(birthDate, "Birth Date");
-        this.patientId = patientId;
-        this.birthDate = birthDate;
+    protected Person(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public String getPatientId() { return patientId; }
-    public LocalDate getBirthDate() { return birthDate; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
 
     @Override
     public String toString() {
-        return super.toString() + " [ID=" + patientId + ", DOB=" + birthDate + "]";
+        return firstName + " " + lastName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Person)) return false;
+        Person other = (Person) obj;
+        return firstName.equals(other.firstName) && lastName.equals(other.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return firstName.hashCode() + lastName.hashCode();
     }
 }
