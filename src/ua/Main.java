@@ -1,37 +1,33 @@
-package ua.model;
-import java.util.Objects;
+package ua;
 
-public class Teacher extends Person {
-    protected String subject; 
+import ua.model.*;
+import ua.util.Utils;
 
-    public Teacher(String name, int age, String subject) {
-        super(name, age);
-        this.subject = subject;
-    }
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-    public String getSubject() { return subject; }
+public class Main {
+    public static void main(String[] args) {
+        // Пацієнт і лікар
+        Patient patient = Utils.createPatient("John", "Doe", "P123", LocalDate.of(1990, 5, 10));
+        Doctor doctor = Utils.createDoctor("Alice", "Smith", "Cardiologist");
 
-    public void setSubject(String subject) {
-        if (subject == null || subject.isBlank()) {
-            throw new IllegalArgumentException("Invalid subject");
+        System.out.println(patient);
+        System.out.println(doctor);
+
+        // Запис на прийом
+        Appointment appointment = new Appointment(patient, doctor, LocalDateTime.now().plusDays(2));
+        System.out.println(appointment);
+
+        // Ліки
+        Medication med = new Medication("Aspirin", "100mg", "Take twice a day");
+        System.out.println(med);
+
+        // Валідація: спроба створити неправильного пацієнта
+        try {
+            Patient bad = Utils.createPatient("Bad", "User", "X", LocalDate.of(2026, 1, 1));
+        } catch (Exception e) {
+            System.out.println("Validation failed: " + e.getMessage());
         }
-        this.subject = subject;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Teacher{name='%s', age=%d, subject='%s'}", getName(), getAge(), subject);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!super.equals(o)) return false;
-        Teacher teacher = (Teacher) o;
-        return Objects.equals(subject, teacher.subject);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), subject);
     }
 }
