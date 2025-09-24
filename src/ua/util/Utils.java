@@ -1,28 +1,19 @@
 package ua.util;
 
-import ua.model.Person;
-import ua.model.Student;
-import ua.model.Teacher;
+import ua.model.Patient;
+import ua.model.Doctor;
+
+import java.time.LocalDate;
 
 public class Utils {
-    public static Person createPerson(String name, int age) {
-        if (!ValidationHelper.isValidName(name) || !ValidationHelper.isValidAge(age)) {
-            throw new IllegalArgumentException("Invalid person data!");
+    public static Patient createPatient(String firstName, String lastName, String patientId, LocalDate birthDate) {
+        if (!ValidationHelper.isValidId(patientId)) {
+            throw new IllegalArgumentException("Invalid patient ID");
         }
-        return new Person(name, age);
+        return new Patient(firstName, lastName, patientId, birthDate);
     }
 
-    public static Student createStudent(String name, int age, int grade) {
-        if (!ValidationHelper.isValidGrade(grade)) {
-            throw new IllegalArgumentException("Invalid grade!");
-        }
-        return new Student(name, age, grade);
-    }
-
-    public static Teacher createTeacher(String name, int age, String subject) {
-        if (!ValidationHelper.isValidName(name)) {
-            throw new IllegalArgumentException("Invalid teacher name!");
-        }
-        return new Teacher(name, age, subject);
+    public static Doctor createDoctor(String firstName, String lastName, String specialty) {
+        return new Doctor(firstName, lastName, specialty);
     }
 }
