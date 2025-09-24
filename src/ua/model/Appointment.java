@@ -1,37 +1,57 @@
 package ua.model;
+
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Teacher extends Person {
-    protected String subject; 
+public class Appointment {
+    private Patient patient;
+    private Doctor doctor;
+    private LocalDateTime appointmentDateTime;
 
-    public Teacher(String name, int age, String subject) {
-        super(name, age);
-        this.subject = subject;
+    public Appointment(Patient patient, Doctor doctor, LocalDateTime appointmentDateTime) {
+        setPatient(patient);
+        setDoctor(doctor);
+        setAppointmentDateTime(appointmentDateTime);
     }
 
-    public String getSubject() { return subject; }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) {
+        if (patient == null) throw new IllegalArgumentException("Patient cannot be null");
+        this.patient = patient;
+    }
 
-    public void setSubject(String subject) {
-        if (subject == null || subject.isBlank()) {
-            throw new IllegalArgumentException("Invalid subject");
+    public Doctor getDoctor() { return doctor; }
+    public void setDoctor(Doctor doctor) {
+        if (doctor == null) throw new IllegalArgumentException("Doctor cannot be null");
+        this.doctor = doctor;
+    }
+
+    public LocalDateTime getAppointmentDateTime() { return appointmentDateTime; }
+    public void setAppointmentDateTime(LocalDateTime appointmentDateTime) {
+        if (appointmentDateTime == null || appointmentDateTime.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Invalid appointment date");
         }
-        this.subject = subject;
+        this.appointmentDateTime = appointmentDateTime;
     }
 
     @Override
     public String toString() {
-        return String.format("Teacher{name='%s', age=%d, subject='%s'}", getName(), getAge(), subject);
+        return String.format("Appointment{patient=%s, doctor=%s, time=%s}",
+                patient.getPatientId(), doctor.getLastName(), appointmentDateTime);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!super.equals(o)) return false;
-        Teacher teacher = (Teacher) o;
-        return Objects.equals(subject, teacher.subject);
+        if (this == o) return true;
+        if (!(o instanceof Appointment)) return false;
+        Appointment that = (Appointment) o;
+        return Objects.equals(patient, that.patient) &&
+               Objects.equals(doctor, that.doctor) &&
+               Objects.equals(appointmentDateTime, that.appointmentDateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), subject);
+        return Objects.hash(patient, doctor, appointmentDateTime);
     }
 }
