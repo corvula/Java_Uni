@@ -2,6 +2,7 @@ package ua.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import ua.model.enums.AppointmentStatus;
 
 public class Appointment {
     private Patient patient;
