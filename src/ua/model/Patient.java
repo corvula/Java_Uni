@@ -2,6 +2,7 @@ package ua.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import ua.model.enums.Specialty;
 
 public class Patient {
     private String firstName;
