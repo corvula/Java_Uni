@@ -1,6 +1,7 @@
 package ua.model;
 
 import java.util.Objects;
+import ua.model.enums.Specialty;
 
 public class Doctor {
     private String firstName;
